@@ -1,6 +1,7 @@
 # selection menu
 
 from collections import namedtuple
+from eval_expression import *
 import sys
 
 
@@ -46,12 +47,13 @@ class Menu:
             try:
                 choice = int(input("Please enter your choice: "))
                 if choice == 1:
-                    print('Option 1: Evaluate Expression has chosen.')
-                    # eval expres to be done
+                    print('Option 1: Evaluate Expression has chosen.\n') 
+                    #eval expres to be done
+                    eval_expression()
                     return False
 
                 elif choice == 2:
-                    print('Option 2: Sort Expression has chosen.')
+                    print('Option 2: Sort Expression has chosen.\n')
                     # sort exp to be done
                     return False
                 elif choice == 3:

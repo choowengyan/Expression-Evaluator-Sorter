@@ -1,4 +1,6 @@
 import re 
+import ast 
+import operator as op
 
 #------------------------
 #       Classes
@@ -46,7 +48,6 @@ class Stack:
         return output
 
 # binary tree ( access function )
-# All python classes are derived from class object 
 class BinaryTree:
 
     # constructor 
@@ -99,7 +100,7 @@ class BinaryTree:
             t =BinaryTree(key)
             self.rightTree , t.rightTree = t, self.rightTree
 
-    # print function 
+    # print function - expression tree
     def printPreorder(self, level):
         print(str(level*'-') + str(self.key))
         if self.leftTree != None:
@@ -115,11 +116,19 @@ class BinaryTree:
         if self.rightTree != None:
             self.rightTree.printInorder(level+1) 
 
+
+#--------------------------
+#       Functions 
+#--------------------------
+
 # building a parse tree
 def buildParseTree(exp):
-    tokens = re.split(r'([+|-|_|/|(|)])',exp) #enable exp to be with/ without space
-    tokens= ' '.join(tokens).split() #remove empty str from list 
-    # print(tokens)
+    operators =r'(\*\*|\*|\+|\-|/|\(|\))'
+    tokens = map(str.strip, re.split(operators, exp)) #split and strip spaces 
+    tokens = list(filter(None, tokens)) # remove empty parts 
+
+    print("tokens: ", tokens)
+
     print("Expression Tree: ")
     stack = Stack()
     tree = BinaryTree('?')
@@ -150,7 +159,11 @@ def buildParseTree(exp):
         # RULE 3: If token is number, set key of the current node
         # to that number and return to parent
         elif t not in ['+', '-', '*', '**', '/', ')'] :
-            currentTree.setKey(int(t))
+            # accept integer and float 
+            try:
+                currentTree.setKey(int(t))
+            except ValueError:
+                currentTree.setKey(float(t))
             parent = stack.pop()
             currentTree = parent
 
@@ -167,24 +180,54 @@ def evaluate(tree):
     rightTree = tree.getRightTree()
     op = tree.getKey()
 
-    if leftTree != None and rightTree != None:
-        if op == '+':
-            return evaluate(leftTree) + evaluate(rightTree)
-        elif op == '-':
-            return evaluate(leftTree) - evaluate(rightTree)
-        elif op == '*':
-            return evaluate(leftTree) * evaluate(rightTree)
-        elif op == '**':
-            return evaluate(leftTree) ** evaluate(rightTree)
-        elif op == '/':
-            return evaluate(leftTree) / evaluate(rightTree)
-    else:
-        return tree.getKey()
+    try:
+        if leftTree != None and rightTree != None:
+            if op == '+':
+                return round(evaluate(leftTree) + evaluate(rightTree),2)
+            elif op == '-':
+                return round(evaluate(leftTree) - evaluate(rightTree),2)
+            elif op == '*':
+                return round(evaluate(leftTree) * evaluate(rightTree),2)
+            elif op == '**':
+                return round(evaluate(leftTree) ** evaluate(rightTree),2)
+            elif op == '/':
+                if evaluate(rightTree) != 0:
+                    return round(evaluate(leftTree) / evaluate(rightTree),2)
+                else:
+                    print(f'{evaluate(leftTree)} cannot divide by 0, please try again.')
+                    eval_expression()
+        else:
+            return tree.getKey()
+    except TypeError:
+        print('Seems like expression format is invalid. Please try again.\n')
+        eval_expression()
+          
+
+def eval_expression():
+    while True: 
+        exp = input('Please enter expression: \n')
+
+        try: 
+            # empty input
+            if len(exp) == 0: 
+                print("Expression is empty. Please try again.\n")
+            # expression doesn't starts and end with brackets 
+            elif not exp.startswith('(') and not exp.endswith(')'):
+                print('Invalid expression format. Please try again\n')
+            # expression contains letters 
+            elif re.search('[a-zA-Z]+',exp) is not None:
+                print("Only integers/ float are allowed, please try again.\n")
+            else:
+                tree = buildParseTree(exp)
+                tree.printPreorder(0)
+                print(f'\nExpression evaluates to: \n{evaluate(tree)}')
+                return False
+                break
+        except ValueError: 
+            print('You entered invalid expression format. Please try again.\n')
 
 
-#exp = '(( 200 + (4 * 3.14)) / ( 2 ** 3 ))'
-
-exp = input("Please enter the expression you want to evaluate:\n")
-tree = buildParseTree(exp)
-tree.printPreorder(0)
-print(f'\nExpression evaluates to: \n{evaluate(tree)}')
+# --------------------
+#   Main Program 
+# --------------------
+# eval_expression()
