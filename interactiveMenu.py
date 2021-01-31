@@ -9,7 +9,7 @@ import time
 import AnsiEscapeCodes as constant
 
 # prints menu and runs the function of the chosen option
-class Menu:
+class interactiveMenu:
     def __init__(self):
         self.chosen = 0
         self.Option = namedtuple('Option', 'label')

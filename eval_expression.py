@@ -1,6 +1,7 @@
 import re 
 import ast 
 import operator as op
+from itertools import accumulate
 from Stack import Stack
 from BinaryTree import BinaryTree
 
@@ -10,7 +11,8 @@ from BinaryTree import BinaryTree
 
 # building a parse tree
 def buildParseTree(exp):
-    operators =r'(\*\*|\*|\+|\-|/|\(|\))'
+    #operators =r'(\*\*|\*|\+|\-|/|\(|\))'
+    operators =r"(\*\*|\*|\+|\-|\/|\(|\))"
     tokens = map(str.strip, re.split(operators, exp)) #split and strip spaces 
     tokens = list(filter(None, tokens)) # remove empty parts 
 
@@ -66,7 +68,9 @@ def evaluate(tree):
     rightTree = tree.getRightTree()
     op = tree.getKey()
 
+    # validate()
     try:
+
         if leftTree != None and rightTree != None:
             if op == '+':
                 return round(evaluate(leftTree) + evaluate(rightTree),2)
@@ -92,7 +96,7 @@ def evaluate(tree):
 def eval_expression():
     while True: 
         exp = input('Please enter expression: \n')
-        print(exp)
+        # print(exp)
         #validate user input expression 
         try: 
             # empty input
@@ -106,6 +110,7 @@ def eval_expression():
                 print("Only integers/ float are allowed, please try again.\n")
             else:
                 tree = buildParseTree(exp)
+                # validate(exp)
                 # printTree()
                 
                 _tree = True 
@@ -131,41 +136,38 @@ def eval_expression():
                     else:
                         print("Invalid input, please try again\n")
                 # tree.printPreorder(0)
-                print(f'\nExpression evaluates to: \n{evaluate(tree)}')
+                print(f'\nExpression evaluates to: {evaluate(tree)}\n')
                 return False
                 break
         except ValueError: 
             print('You entered invalid expression format. Please try again.\n')
 
-# def printTree():
-#     tree = buildParseTree(exp)
-#     print('Please choose the ways of transversing the Expression Tree:\n')
-#     print('1. Inorder Traversal\n2. Preorder Traversal\n3. Postorder Traversal\n')
-    
-#     while True:
-#         traversal = int(input('Your choice: \n'))
-#         print("chosen: ",traversal)
-#         if traversal == 1:  
-#             tree.printInorder(0) 
-#                 #print(f'\nExpression evaluates to: \n{evaluate(tree)}')
-#                 # return False
-#             return False 
-#         elif traversal == 2:
-#             tree.printPreorder(0)
-#             return False
-#             break
-#         elif traversal == 3:
-#             tree.printPostorder(0)
-#             return False 
-#             break
-#         else:
-#             print("Invalid input, please try again\n")
-#     print(f'\nExpression evaluates to: \n{evaluate(tree)}')
 
+def validate(exp):
+    tokens   = buildParseTree(exp)
+    error    = ""
+    pLevel   = 0
+
+    for errorPos,token in enumerate(tokens):
+        pLevel += (part=="(")-(part==")")
+        if pLevel<0: 
+            error="too many closing parentheses";break
+        if part in ["**","*","+","-","/","(",")"]: 
+            continue
+        if all(p.isdigit() for p in part.split(".",1)): 
+            continue
+        error = "invalid operand: " + part
+        break
+    if not error and pLevel!=0:
+        errorPos,error = len(parts),"unbalanced parentheses"
+    if error:
+        print("".join(parts))
+        indent = " " * sum(map(len,parts[:errorPos]))
+        print(indent+"^")
+        print(indent+"|__ Error!",error)
             
 
 # --------------------
 #   Main Program 
 # --------------------
-eval_expression()
-# printTree()
+# eval_expression()
