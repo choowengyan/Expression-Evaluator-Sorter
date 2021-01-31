@@ -116,7 +116,7 @@ def eval_expression():
                 _tree = True 
                 while _tree:
                     # while True:
-                    print('\nPlease choose the way of transversing the Expression Tree:')
+                    print('\nPlease choose the way of trasversing the Expression Tree:')
                     print('1. Inorder Traversal\n2. Preorder Traversal\n3. Postorder Traversal\n')
 
                     traversal = input('Your choice: ')

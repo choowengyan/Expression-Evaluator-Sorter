@@ -26,12 +26,12 @@ class interactiveMenu:
 
         # border = (len(done_by)+4) * border_symbol
         border = 60*border_symbol
-        seperator = (len(border)-4) * "-"
+        separator = (len(border)-4) * "-"
 
         print(border)
         print(border_symbol, course.center(55), border_symbol.rjust(2))
-        print(border_symbol, seperator, border_symbol)
-        print(border_symbol, len(seperator)*" ", border_symbol)
+        print(border_symbol, separator, border_symbol)
+        print(border_symbol, len(separator)*" ", border_symbol)
         print(border_symbol, done_by, border_symbol)
         print(border_symbol, class_name, border_symbol.rjust(35))
         print(border, '\n')
