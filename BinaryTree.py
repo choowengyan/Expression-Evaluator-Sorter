@@ -60,6 +60,17 @@ class BinaryTree:
 
     def printInorder(self, level):
         if self.leftTree != None:
-            self.leftTree.printInorder(level+1)
+            self.leftTree.printInorder(level+1) 
+
+        print(str(level * '-') + str(self.key))
+
         if self.rightTree != None:
             self.rightTree.printInorder(level+1) 
+
+    def printPostorder(self, level):
+        if self.leftTree != None:
+            self.leftTree.printPostorder(level+1) 
+            
+        if self.rightTree != None:
+            self.rightTree.printPostorder(level+1) 
+        print(str(level * '-') + str(self.key))

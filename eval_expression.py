@@ -16,7 +16,6 @@ def buildParseTree(exp):
 
     print("tokens: ", tokens)
 
-    print("Expression Tree: ")
     stack = Stack()
     tree = BinaryTree('?')
     stack.push(tree)
@@ -93,28 +92,80 @@ def evaluate(tree):
 def eval_expression():
     while True: 
         exp = input('Please enter expression: \n')
-
+        print(exp)
+        #validate user input expression 
         try: 
             # empty input
             if len(exp) == 0: 
                 print("Expression is empty. Please try again.\n")
             # expression doesn't starts and end with brackets 
-            elif not exp.startswith('(') and not exp.endswith(')'):
+            elif not exp.startswith('(') or not exp.endswith(')'):
                 print('Invalid expression format. Please try again\n')
             # expression contains letters 
             elif re.search('[a-zA-Z]+',exp) is not None:
                 print("Only integers/ float are allowed, please try again.\n")
             else:
                 tree = buildParseTree(exp)
-                tree.printPreorder(0)
+                # printTree()
+                
+                _tree = True 
+                while _tree:
+                    # while True:
+                    print('\nPlease choose the way of transversing the Expression Tree:')
+                    print('1. Inorder Traversal\n2. Preorder Traversal\n3. Postorder Traversal\n')
+
+                    traversal = input('Your choice: ')
+
+                    if traversal == '1':  
+                        print('\nExpression Tree (Inorder Traversal): ')
+                        tree.printInorder(0) 
+                        _tree = False
+                    elif traversal == '2':
+                        print('\nExpression Tree (Preorder Traversal): ')
+                        tree.printPreorder(0)
+                        _tree = False
+                    elif traversal == '3':
+                        print('\nExpression Tree (Postorder Traversal): ')
+                        tree.printPostorder(0)
+                        _tree = False
+                    else:
+                        print("Invalid input, please try again\n")
+                # tree.printPreorder(0)
                 print(f'\nExpression evaluates to: \n{evaluate(tree)}')
                 return False
                 break
         except ValueError: 
             print('You entered invalid expression format. Please try again.\n')
 
+# def printTree():
+#     tree = buildParseTree(exp)
+#     print('Please choose the ways of transversing the Expression Tree:\n')
+#     print('1. Inorder Traversal\n2. Preorder Traversal\n3. Postorder Traversal\n')
+    
+#     while True:
+#         traversal = int(input('Your choice: \n'))
+#         print("chosen: ",traversal)
+#         if traversal == 1:  
+#             tree.printInorder(0) 
+#                 #print(f'\nExpression evaluates to: \n{evaluate(tree)}')
+#                 # return False
+#             return False 
+#         elif traversal == 2:
+#             tree.printPreorder(0)
+#             return False
+#             break
+#         elif traversal == 3:
+#             tree.printPostorder(0)
+#             return False 
+#             break
+#         else:
+#             print("Invalid input, please try again\n")
+#     print(f'\nExpression evaluates to: \n{evaluate(tree)}')
+
+            
 
 # --------------------
 #   Main Program 
 # --------------------
-# eval_expression()
+eval_expression()
+# printTree()
