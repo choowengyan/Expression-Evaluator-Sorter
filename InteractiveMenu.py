@@ -9,7 +9,7 @@ from eval_expression import *
 import utils.AnsiEscapeCodes as constant
 
 # prints menu and runs the function of the chosen option
-class Menu:
+class InteractiveMenu:
     def __init__(self):
         self.chosen = 0
         self.Option = namedtuple('Option', 'label')
