@@ -1,8 +1,6 @@
-import re 
-import ast 
-import operator as op
-from Stack import Stack
-from BinaryTree import BinaryTree
+import re
+from utils.Stack import Stack
+from utils.BinaryTree import BinaryTree
 
 #--------------------------
 #       Functions 
@@ -10,8 +8,8 @@ from BinaryTree import BinaryTree
 
 # building a parse tree
 def buildParseTree(exp):
-    operators =r'(\*\*|\*|\+|\-|/|\(|\))'
-    tokens = map(str.strip, re.split(operators, exp)) #split and strip spaces 
+    operators = r'(\*\*|\*|\+|\-|\/|\(|\))'
+    tokens = map(str.strip, re.split(operators, exp)) # split and strip spaces 
     tokens = list(filter(None, tokens)) # remove empty parts 
 
     print("tokens: ", tokens)
@@ -21,7 +19,7 @@ def buildParseTree(exp):
     tree = BinaryTree('?')
     stack.push(tree)
     
-    #node
+    # node
     currentTree = tree
 
     # process that breaks down each and every token (number, brackets, anything)
@@ -70,13 +68,13 @@ def evaluate(tree):
     try:
         if leftTree != None and rightTree != None:
             if op == '+':
-                return round(evaluate(leftTree) + evaluate(rightTree),2)
+                return round(evaluate(leftTree) + evaluate(rightTree), 2)
             elif op == '-':
-                return round(evaluate(leftTree) - evaluate(rightTree),2)
+                return round(evaluate(leftTree) - evaluate(rightTree), 2)
             elif op == '*':
-                return round(evaluate(leftTree) * evaluate(rightTree),2)
+                return round(evaluate(leftTree) * evaluate(rightTree), 2)
             elif op == '**':
-                return round(evaluate(leftTree) ** evaluate(rightTree),2)
+                return round(evaluate(leftTree) ** evaluate(rightTree), 2)
             elif op == '/':
                 if evaluate(rightTree) != 0:
                     return round(evaluate(leftTree) / evaluate(rightTree),2)
@@ -103,7 +101,7 @@ def eval_expression():
                 print('Invalid expression format. Please try again\n')
             # expression contains letters 
             elif re.search('[a-zA-Z]+',exp) is not None:
-                print("Only integers/ float are allowed, please try again.\n")
+                print("Only integers/float are allowed, please try again.\n")
             else:
                 tree = buildParseTree(exp)
                 tree.printPreorder(0)

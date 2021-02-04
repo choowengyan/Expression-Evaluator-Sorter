@@ -1,12 +1,12 @@
 # selection menu
 
-from collections import namedtuple
-from eval_expression import *
 import sys
 import os
 import msvcrt
 import time
-import AnsiEscapeCodes as constant
+from collections import namedtuple
+from eval_expression import *
+import utils.AnsiEscapeCodes as constant
 
 # prints menu and runs the function of the chosen option
 class Menu:
@@ -33,6 +33,7 @@ class Menu:
         print(border_symbol, seperator, border_symbol)
         print(border_symbol, len(seperator)*" ", border_symbol)
         print(border_symbol, done_by, border_symbol)
+        print(border_symbol, len(seperator)*" ", border_symbol)
         print(border_symbol, class_name, border_symbol.rjust(35))
         print(border, '\n')
 
@@ -57,7 +58,6 @@ class Menu:
         self.header()
         self.printMenu(1)
         while True:
-            # time.sleep(0.5)
             if msvcrt.kbhit():
                 first_key = msvcrt.getch()
                 if first_key == b'\x00':
