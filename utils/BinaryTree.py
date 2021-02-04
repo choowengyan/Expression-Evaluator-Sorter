@@ -11,7 +11,7 @@ class BinaryTree:
         return self.preorder(0) # start from root (0) -> which is 0
 
     def preorder(self, level):
-        output =  str(level*'-') + str(self.key) + '\n'
+        output =  str(level*'-') + '(' + str(self.key) + ')' + '\n'
         if self.leftTree != None:
             output += self.leftTree.preorder(level+1) 
 

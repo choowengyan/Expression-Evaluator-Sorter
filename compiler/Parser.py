@@ -1,5 +1,5 @@
 # Expression parser: recursive descent implementation
-from utils import BinaryTree
+from utils.BinaryTree import BinaryTree
 from compiler.Lexer import Lexer
 from compiler.TokenTypes import *
 
@@ -32,23 +32,14 @@ class Parser:
             right = builder_func()
             if right == None or left == None:
                 raise ValueError('__BinaryExpression: Invalid Binary Expression')
-            left = {
-                'type': 'BinaryExpression',
-                'operator': operator,
-                'left': left,
-                'right': right
-            }
+            left = BinaryTree(operator, left, right)
         return left
     
     def __UnaryExpression(self, builder_func, operator_token):
         while self.__lookahead.type == operator_token:
             operator = self.__eat(operator_token).value
             right = builder_func()
-            left = {
-                'type': 'UnaryExpression',
-                'operator': operator,
-                'right': right
-            }
+            left = BinaryTree(operator, None, right)
         return left
 
     def AdditiveExpression(self):
@@ -80,10 +71,7 @@ class Parser:
     def NumericLiteral(self):
         try:
             token = self.__eat('NUMBER')
-            return {
-                'type': 'NumericLiteral',
-                'value': token.value
-            }
+            return BinaryTree(token.value)
         except:
             print('Error in NumericLiteral(): Not a number')
 
