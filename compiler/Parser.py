@@ -38,8 +38,10 @@ class Parser:
     def __UnaryExpression(self, builder_func, operator_token):
         while self.__lookahead.type == operator_token:
             operator = self.__eat(operator_token).value
+            #print("operator--",operator)
             right = builder_func()
             left = BinaryTree(operator, None, right)
+            #print("left>>", left)
         return left
 
     def AdditiveExpression(self):
@@ -71,6 +73,7 @@ class Parser:
     def NumericLiteral(self):
         try:
             token = self.__eat('NUMBER')
+            #print("numeric token:",token.value)
             return BinaryTree(token.value)
         except:
             print('Error in NumericLiteral(): Not a number')
@@ -83,6 +86,7 @@ class Parser:
             if token.type != token_type:
                 raise TypeError()
             self.__lookahead = self.__lexer.getNextToken()
+            #print('token:',token.value)
             return token
         except TypeError:
             print('Error in __eat: Unexpected token: {}, expected {}'.format(token.type, token_type))

@@ -18,9 +18,10 @@ def buildParseTree(exp):
     stack = Stack()
     tree = BinaryTree('?')
     stack.push(tree)
-    
+    print('stack', stack)
     # node
     currentTree = tree
+    print("currentTree",currentTree)
 
     # process that breaks down each and every token (number, brackets, anything)
     for t in tokens:
@@ -57,13 +58,18 @@ def buildParseTree(exp):
             currentTree = stack.pop()
         else:
             raise ValueError
+    print('tree--',tree)
     return tree 
 
 # Evaluate parse tree 
 def evaluate(tree):
+    print('tree', tree)
     leftTree = tree.getLeftTree()
+    print("left",leftTree)
     rightTree = tree.getRightTree()
+    print("right", rightTree)
     op = tree.getKey()
+    print("op", op)
 
     try:
         if leftTree != None and rightTree != None:

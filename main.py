@@ -1,6 +1,6 @@
   
-from ClassicMenu import ClassicMenu
-from InteractiveMenu import InteractiveMenu
+from utils.ClassicMenu import ClassicMenu
+from utils.InteractiveMenu import InteractiveMenu
 from compiler.Lexer import Lexer
 from compiler.Parser import Parser
 import os
