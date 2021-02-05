@@ -1,5 +1,6 @@
 # Expression parser: recursive descent implementation
 from utils.BinaryTree import BinaryTree
+from utils.UnaryOp import UnaryOp
 from compiler.Lexer import Lexer
 from compiler.TokenTypes import *
 
@@ -26,6 +27,7 @@ class Parser:
         return self.AdditiveExpression()
 
     def __BinaryExpression(self, builder_func, operator_token):
+        # print('__BinaryExpression operator_token', operator_token)
         left = builder_func()
         while self.__lookahead.type == operator_token:
             operator = self.__eat(operator_token).value
@@ -35,15 +37,6 @@ class Parser:
             left = BinaryTree(operator, left, right)
         return left
     
-    def __UnaryExpression(self, builder_func, operator_token):
-        while self.__lookahead.type == operator_token:
-            operator = self.__eat(operator_token).value
-            #print("operator--",operator)
-            right = builder_func()
-            left = BinaryTree(operator, None, right)
-            #print("left>>", left)
-        return left
-
     def AdditiveExpression(self):
         return self.__BinaryExpression(self.MultiplicativeExpression, 'ADDITIVE_OPERATOR')
 
@@ -51,15 +44,23 @@ class Parser:
         return self.__BinaryExpression(self.ExponentialExpression, 'MULTIPLICATIVE_OPERATOR')
     
     def ExponentialExpression(self):
-        return self.__BinaryExpression(self.PrimaryExpression, 'EXPONENTIAL_OPERATOR')
+        return self.__BinaryExpression(self.UnaryExpression, 'EXPONENTIAL_OPERATOR')
     
+    def UnaryExpression(self):
+        if self.__lookahead.type == 'ADDITIVE_OPERATOR':
+            operator = self.__eat('ADDITIVE_OPERATOR').value
+            right = self.PrimaryExpression()
+            node = UnaryOp(operator, right)
+            return node
+        return self.PrimaryExpression()
+
     def PrimaryExpression(self):
         if self.__lookahead.type == OPEN_PARENTHESIS:
             return self.ParenthesizedExpression()
-        elif self.__lookahead.type == ADDITIVE_OPERATOR:
-            return self.__UnaryExpression(self.PrimaryExpression, ADDITIVE_OPERATOR)
-        else:
+        elif self.__lookahead.type == NUMBER:
             return self.NumericLiteral()
+        # else:
+        #     return self.error()
     
     def ParenthesizedExpression(self):
         self.__eat(OPEN_PARENTHESIS)
@@ -73,7 +74,6 @@ class Parser:
     def NumericLiteral(self):
         try:
             token = self.__eat('NUMBER')
-            #print("numeric token:",token.value)
             return BinaryTree(token.value)
         except:
             print('Error in NumericLiteral(): Not a number')
@@ -86,7 +86,6 @@ class Parser:
             if token.type != token_type:
                 raise TypeError()
             self.__lookahead = self.__lexer.getNextToken()
-            #print('token:',token.value)
             return token
         except TypeError:
             print('Error in __eat: Unexpected token: {}, expected {}'.format(token.type, token_type))

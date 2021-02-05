@@ -52,11 +52,9 @@ class BinaryTree:
     def printPreorder(self, level):
         print(str(level * '-') + str(self.key))
         if self.leftTree != None:
-            # print('left', self.leftTree)
             self.leftTree.printPreorder(level+1)
 
         if self.rightTree != None:
-            # print('right', self.rightTree)
             self.rightTree.printPreorder(level+1) 
 
     def printInorder(self, level):

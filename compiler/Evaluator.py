@@ -8,9 +8,7 @@ from compiler.TokenTypes import *
 class Evaluator:
     def __init__(self, exp):
         self.exp = exp
-        # self.__string = string
-        # self.__lexer = Lexer(self.__string)
-        # self.parser = parser
+        self.parser = Parser(exp)
 
     def buildParseTree(exp):
         parser = Parser(exp)
