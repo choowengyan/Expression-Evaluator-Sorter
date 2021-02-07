@@ -50,7 +50,7 @@ class Parser:
         if self.__lookahead.type == 'ADDITIVE_OPERATOR':
             operator = self.__eat('ADDITIVE_OPERATOR').value
             right = self.PrimaryExpression()
-            node = UnaryOp(operator, right)
+            node = BinaryTree(operator, None, right)
             return node
         return self.PrimaryExpression()
 

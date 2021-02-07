@@ -6,13 +6,15 @@ from compiler.Evaluator import Evaluator
 
 
 
-# exp = '(23+23-23+(23**3))'
-exp = '(23+23-3)'
+exp = '(23+23-*23/+(23**3))'
+# exp = '-3+23'
 
 
-eval = Evaluator(exp)
-Evaluator.buildParseTree(exp)
-#Evaluator.evaluate(exp)
+evaluator = Evaluator(exp)
+# evaluator.printParseTree()
+evaluator.eval_expression()
+# print(eval(exp))
+# evaluator.evaluate()
 
 
 

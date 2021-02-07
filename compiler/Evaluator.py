@@ -6,73 +6,67 @@ from compiler.TokenTypes import *
 
 
 class Evaluator:
-    def __init__(self, exp):
+    def __init__(self, exp=''):
         self.exp = exp
         self.parser = Parser(exp)
+        self.tree = self.parser.parse()
 
-    def buildParseTree(exp):
-        parser = Parser(exp)
-        stack = Stack()
-        tree = BinaryTree('?')
-        stack.push(tree)
-
-
+    def printParseTree(self):
         # parser tree
-        ast = parser.parse()
-        print("ast\n",ast)
+        print("ast\n{}".format(self.tree))
+        # print(self.evaluate(self.tree))
 
 
-    def evaluate(ast):
+    def evaluate(self, ast):
         leftTree = ast.getLeftTree()
-        print('left', leftTree)
-
         rightTree = ast.getRightTree()
-        print('right', rightTree)
-        
         op = ast.getKey()
-        print("op", op)
 
         try:
+            # Unary Operator
+            if leftTree == None:
+                if op == '+':
+                    return +self.evaluate(rightTree)
+                elif op == '-':
+                    return -self.evaluate(rightTree)
+            # Binary Operator
             if leftTree != None and rightTree != None:
                 if op == '+':
-                    return round(evaluate(leftTree) + evaluate(rightTree), 2)
+                    return round(self.evaluate(leftTree) + self.evaluate(rightTree), 2)
                 elif op == '-':
-                    return round(evaluate(leftTree) - evaluate(rightTree), 2)
+                    return round(self.evaluate(leftTree) - self.evaluate(rightTree), 2)
                 elif op == '*':
-                    return round(evaluate(leftTree) * evaluate(rightTree), 2)
+                    return round(self.evaluate(leftTree) * self.evaluate(rightTree), 2)
                 elif op == '**':
-                    return round(evaluate(leftTree) ** evaluate(rightTree), 2)
+                    return round(self.evaluate(leftTree) ** self.evaluate(rightTree), 2)
                 elif op == '/':
-                    if evaluate(rightTree) != 0:
-                        return round(evaluate(leftTree) / evaluate(rightTree),2)
-                    else:
-                        print(f'{evaluate(leftTree)} cannot divide by 0, please try again.')
-                        # eval_expression()
+                    return round(self.evaluate(leftTree) / self.evaluate(rightTree),2)
             else:
                 return ast.getKey()
         except TypeError:
             print('Seems like expression format is invalid. Please try again.\n')
-            # eval_expression()
+        except ValueError:
+            print('Seems like expression format is invalid. Please try again.\n')
+        except ZeroDivisionError:
+            print(f'{self.evaluate(leftTree)} cannot divide by 0, please try again.')
           
 
-
-
-
-
-    # def input_expression():
-    #     while True:
-    #         try:
-    #             exp = input('Please enter expression: \n')
-    #         except EOFError:
-    #             break
-    #         if not exp:
-    #             continue
-
-    #         lexer = Lexer(exp)
-    #         parser = Parser(lexer)
-    #         ast = parser.parse()
-
-    #         print(ast)
+    def eval_expression():
+        while True:
+            self.exp = input('Please enter expression: \n')
+            try:
+                # empty input
+                if len(self.exp) == 0: 
+                    print("Expression is empty. Please try again.\n")
+                else:
+                    self.parser = Parser(exp)
+                    self.tree = self.parser.parse()
+                    self.tree.printPreorder(0)
+                    print(f'\nExpression evaluates to: \n{self.evaluate(self.tree)}')
+                    return False
+                    break
+            except ValueError: 
+                print('You entered invalid expression format. Please try again.\n')
 
 
 # exp = '(23+23-23+(23**3))'
