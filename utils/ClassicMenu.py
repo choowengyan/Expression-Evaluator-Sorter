@@ -1,5 +1,6 @@
 from collections import namedtuple
 from eval_expression import *
+from compiler.Evaluator import * 
 import sys
 
 
@@ -47,7 +48,11 @@ class ClassicMenu:
                 choice = int(input("Please enter your choice: "))
                 if choice == 1:
                     print('Option 1: Evaluate Expression has chosen.\n')
-                    eval_expression()
+                    exp = input('Please enter expression: \n')
+                    evaluator = Evaluator()
+                    evaluator.eval_expression(exp)
+                    #evaluator.eval_expression()
+                    # eval_expression()
                     return False
                 elif choice == 2:
                     print('Option 2: Sort Expression has chosen.\n')

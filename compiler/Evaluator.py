@@ -51,9 +51,10 @@ class Evaluator:
             print(f'{self.evaluate(leftTree)} cannot divide by 0, please try again.')
           
 
-    def eval_expression():
+    def eval_expression(self, exp):
         while True:
-            self.exp = input('Please enter expression: \n')
+            # self.exp = exp
+            self.exp = exp
             try:
                 # empty input
                 if len(self.exp) == 0: 
@@ -70,6 +71,5 @@ class Evaluator:
 
 
 # exp = '(23+23-23+(23**3))'
-# eval = Evaluator()
+
 # eval.buildParseTree()
-# eval.evaluate()

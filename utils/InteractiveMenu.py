@@ -5,10 +5,13 @@ import os
 import msvcrt
 import time
 from collections import namedtuple
-from eval_expression import *
+# from eval_expression import *
+from compiler.Evaluator import *
 import utils.AnsiEscapeCodes as constant
 
 # prints menu and runs the function of the chosen option
+
+
 class InteractiveMenu:
     def __init__(self):
         self.chosen = 0
@@ -16,7 +19,6 @@ class InteractiveMenu:
         self.options = {1: self.Option("Evaluate Expression"),
                         2: self.Option("Sort Expressions"),
                         3: self.Option("Exit")}
-
 
     def header(self):
         border_symbol = "*"
@@ -40,7 +42,7 @@ class InteractiveMenu:
     def printMenu(self, move_cursor):
         print("Please press up or down arrow to select: ")
         self.chosen += move_cursor
-        
+
         if self.chosen <= 0:
             self.chosen = len(self.options)
         if self.chosen > len(self.options):
@@ -50,7 +52,8 @@ class InteractiveMenu:
 
         for option in sorted(self.options.keys()):
             sys.stdout.write(constant.COLOR['BLUE'])
-            print(constant.COLOR['YELLOW'] + '>' if self.chosen == option else '', self.options[option].label)
+            print(constant.COLOR['YELLOW'] + '>' if self.chosen ==
+                  option else '', self.options[option].label)
             sys.stdout.write(constant.COLOR['DEFAULT'])
 
     # selection
@@ -74,8 +77,12 @@ class InteractiveMenu:
     def process_selection(self):
         print()
         if self.chosen == 1:
-            print('Option 1: Evaluate Expression has chosen.\n') 
-            eval_expression()
+            print('Option 1: Evaluate Expression has chosen.\n')
+            exp = input('Please enter expression: \n')
+            evaluator = Evaluator()
+            evaluator.eval_expression(exp)
+            # evaluator.eval_expression()
+            #eval_expression()
             return False
 
         elif self.chosen == 2:
