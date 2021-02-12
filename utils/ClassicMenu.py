@@ -1,6 +1,7 @@
 from collections import namedtuple
 from eval_expression import *
 from compiler.Evaluator import * 
+from compiler.SortExpression import * 
 import sys
 
 
@@ -56,7 +57,9 @@ class ClassicMenu:
                     return False
                 elif choice == 2:
                     print('Option 2: Sort Expression has chosen.\n')
-                    # sort exp to be done
+                    sorter = SortExpression()
+                    sorter.eval_sort_output()
+
                     return False
                 elif choice == 3:
                     print('Option 3: Exit')

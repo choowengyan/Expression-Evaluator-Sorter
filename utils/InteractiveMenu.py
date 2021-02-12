@@ -5,8 +5,8 @@ import os
 import msvcrt
 import time
 from collections import namedtuple
-# from eval_expression import *
 from compiler.Evaluator import *
+from compiler.SortExpression import * 
 import utils.AnsiEscapeCodes as constant
 
 # prints menu and runs the function of the chosen option
@@ -87,7 +87,8 @@ class InteractiveMenu:
 
         elif self.chosen == 2:
             print('Option 2: Sort Expression has chosen.\n')
-            # sort exp to be done
+            sorter = SortExpression()
+            sorter.eval_sort_output()
             return False
         elif self.chosen == 3:
             print('Option 3: Exit\nBye, thanks for using ST1507 DSAA: Expression Evaluator & Sorter')
