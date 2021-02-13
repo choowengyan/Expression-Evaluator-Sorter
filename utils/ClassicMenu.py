@@ -47,10 +47,14 @@ class ClassicMenu:
                 choice = int(input("Please enter your choice: "))
                 if choice == 1:
                     print('Option 1: Evaluate Expression has chosen.\n')
-                    exp = input('Please enter expression: \n')
-                    evaluator = Evaluator()
-                    evaluator.eval_expression(exp)
-                    return False
+                    while True:
+                        exp = input('Please enter expression: \n')
+                        try:
+                            evaluator = Evaluator()
+                            evaluator.eval_expression(exp)
+                            break
+                        except:
+                            print('Invalid Expression, please try again.\n')
                 elif choice == 2:
                     print('Option 2: Sort Expression has chosen.\n')
                     sorter = SortExpression()

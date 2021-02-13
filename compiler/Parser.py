@@ -59,6 +59,8 @@ class Parser:
             return self.ParenthesizedExpression()
         elif self.__lookahead.type == NUMBER:
             return self.NumericLiteral()
+        elif self.__lookahead.type == 'ADDITIVE_OPERATOR':
+            return self.UnaryExpression()
         # else:
         #     return self.error()
     
@@ -76,7 +78,7 @@ class Parser:
             token = self.__eat('NUMBER')
             return BinaryTree(token.value)
         except:
-            print('Error in NumericLiteral(): Not a number')
+            raise ValueError('Error in NumericLiteral(): Not a number')
 
     def __eat(self, token_type):
         try:
@@ -88,4 +90,4 @@ class Parser:
             self.__lookahead = self.__lexer.getNextToken()
             return token
         except TypeError:
-            print('Error in __eat: Unexpected token: {}, expected {}'.format(token.type, token_type))
+            raise TypeError('Error in __eat: Unexpected token: {}, expected {}'.format(token.type, token_type))

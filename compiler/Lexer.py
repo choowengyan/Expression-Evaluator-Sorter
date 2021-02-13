@@ -42,7 +42,7 @@ class Lexer():
         return 'expression: {}\nposition: {}'.format(self.__expression, self.__position)
 
     def error(self):
-        raise Exception('Invalid syntax')
+        raise SyntaxError('Invalid syntax')
 
     def getNextToken(self):
         while self.__current_char is not None:
@@ -77,7 +77,7 @@ class Lexer():
                 parenthesis = self.__current_char
                 self.__advance()
                 return Token(CLOSING_PARENTHESIS, parenthesis)
-            return self.error()
+            self.error()
         return Token(EOF, self.__current_char)
 
     def __hasMoreTokens(self):

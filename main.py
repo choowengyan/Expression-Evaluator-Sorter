@@ -12,12 +12,13 @@ InteractiveMenu = InteractiveMenu() # interactive version
 
 while True:
     ClassicMenu.header()
-    version = int(input("Welcome! Please choose a mode for the program:\n1. Original Mode\n2. Interactive Mode\n>>> "))
+    version = input("Welcome! Please choose a mode for the program:\n1. Original Mode\n2. Interactive Mode\n>>> ")
     try:
+        version = int(version)
         if version == 1 :
             print()
             ClassicMenu.select_option()
-        elif version ==2 : 
+        elif version == 2 : 
             print()
             InteractiveMenu.select_option()
     except ValueError:
