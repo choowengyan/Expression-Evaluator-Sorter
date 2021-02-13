@@ -27,4 +27,4 @@ while True:
     try:
         os.system('pause')  
     except whatever_it_is:
-        os.system('read -p "Press any key to continue"')
+        os.system('read -p "\nPress any key to continue"')

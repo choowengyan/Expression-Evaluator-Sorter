@@ -16,8 +16,6 @@ class SortExpression:
         self.expression_list = expression_list
         self.sorted_value = None
         self.sorted_list = []
-        # self.inputFileName = None
-        # self.outputFileName = None
         super().__init__()
 
     def openFile(self):
@@ -30,7 +28,6 @@ class SortExpression:
 
                 with open(inputFileName) as f:
                     self.file_exp = [line.rstrip('\n') for line in f] 
-                    #print(self.file_exp)
                 return False
 
             except FileNotFoundError or IOError or PermissionError:
@@ -40,20 +37,16 @@ class SortExpression:
     def eval_expression(self, file_exp):
         values = []
         file_exp = self.file_exp
-        #print('\n>>> Evaluation and sorting started:')
+
         for i in file_exp:
             parser = Parser(i)
             tree = parser.parse()
             evaluator = Evaluator()
-            value = evaluator.evaluate(tree)
 
+            value = evaluator.evaluate(tree)
             values.append(value)
-            #print(f'{i} ==> {evaluator.evaluate(tree)}')
-        #print("sorted value",sorted(values))
-        #print(type(file_exp[0]))
 
         exp_val_list = list(zip(file_exp, values))
-        #print("exp_val_list",exp_val_list)
         self.expression_list = exp_val_list
         return exp_val_list
 
@@ -73,7 +66,6 @@ class SortExpression:
 
     def sort_val_desc(self, exp_list):
         l = len(exp_list)
-       # print("exp_list[0]VALUE DESC bef",exp_list[0])
 
         for i in range(0, l):
             for j in range(0, l-i-1):
@@ -81,7 +73,6 @@ class SortExpression:
                     temp = exp_list[j+1]
                     exp_list[j+1] = exp_list[j]
                     exp_list[j] = temp
-        #print("explist(sortValDesc): ",exp_list)
         return exp_list
         self.sorted_value = exp_list
         
@@ -102,7 +93,6 @@ class SortExpression:
     # sort expressions by length (desc)
     def sort_length_desc(self, sorted_value):
         v = len(sorted_value)
-        #print(sorted_value[0])
 
         for x in range(0, v):
             for y in range(0, v-x-1):
@@ -111,25 +101,21 @@ class SortExpression:
                     sorted_value[y+1] = sorted_value[y]
                     sorted_value[y] = tmp
 
-        #print("sorted_value(with length)", sorted_value)
         return sorted_value
         self.sorted_list = sorted_value
 
     # get unique value from list of expression values 
     def get_unique_value(self, sorted_list):
         unique_value = []
-        #print("sortedList(Unique):", sorted_list)
+ 
         for i in range(0, len(sorted_list)):
             val = sorted_list[i][1]
             unique_value.append(val)
-        #unique_value = np.unique(unique_value)
+
         unique_value = list(OrderedDict.fromkeys(unique_value))
-        
-        #print("unique",unique_value)
         self.get_unique_value = unique_value
 
     def write_expression(self, sorted_list):
-        #print("sortedlist\n",sorted_list)
 
         unique_val_l = len(self.get_unique_value)
         output_file = open(self.outputFileName, 'w')
@@ -154,7 +140,7 @@ class SortExpression:
         while True:
             exp = sort.openFile()
             sort_choice = int(input('\nPrint expression in:\n1. Ascending Order\n2. Descending Order\n>>>'))
-            print('>>> Evaluation and Sorting has started:')
+            print('\n>>> Evaluation and Sorting has started: ')
             self.eval_ = sort.eval_expression(exp)
             
             try: 
