@@ -81,18 +81,15 @@ class InteractiveMenu:
             exp = input('Please enter expression: \n')
             evaluator = Evaluator()
             evaluator.eval_expression(exp)
-            # evaluator.eval_expression()
-            #eval_expression()
             return False
-
         elif self.chosen == 2:
             print('Option 2: Sort Expression has chosen.\n')
             sorter = SortExpression()
-            sorter.eval_sort_output()
+            sorter.printOutput()
             return False
+        # exits the program
         elif self.chosen == 3:
             print('Option 3: Exit\nBye, thanks for using ST1507 DSAA: Expression Evaluator & Sorter')
-            # exits the program
             sys.exit()
         else:
             print('Input number is not in the menu option, please try again.\n')

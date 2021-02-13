@@ -13,8 +13,6 @@ class ClassicMenu:
                2: Option("Sort Expressions"),
                3: Option("Exit")}
 
-    # def __init__(self)
-
     def header(self):
         border_symbol = "*"
         course = ' ST1507 DSAA: Expression Evaluator & Sorter'
@@ -52,23 +50,18 @@ class ClassicMenu:
                     exp = input('Please enter expression: \n')
                     evaluator = Evaluator()
                     evaluator.eval_expression(exp)
-                    #evaluator.eval_expression()
-                    # eval_expression()
                     return False
                 elif choice == 2:
                     print('Option 2: Sort Expression has chosen.\n')
                     sorter = SortExpression()
-                    sorter.eval_sort_output()
-
+                    sorter.printOutput()
                     return False
+                # exits the program
                 elif choice == 3:
-                    print('Option 3: Exit')
-                    print(
-                        'Bye, thanks for using ST1507 DSAA: Expression Evaluator & Sorter ')
-                    # exits the program
+                    print('Option 3: Exit\nBye, thanks for using ST1507 DSAA: Expression Evaluator & Sorter ')
                     sys.exit()
                 else:
                     print('Input number is not in the menu option, please try again.\n')
             # wrong value type
-            except(ValueError):
+            except ValueError:
                 print("Only number is allowed, please try again.\n")
