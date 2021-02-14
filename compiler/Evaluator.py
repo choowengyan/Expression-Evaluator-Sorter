@@ -12,9 +12,9 @@ folder.
 
 Methods:
 - print Parse Tree
-    - Preoder Traversal
-    - Inoder Traversal
-    - Postoder Traversal
+    - Preorder Traversal
+    - Inorder Traversal
+    - Postorder Traversal
 - evaluate expression and return value in 2 decimal places 
 '''
 
