@@ -1,3 +1,12 @@
+# -------------------------------------------------|
+# ST1507 DSAA CA2 : Expression Evaluator & Sorter  |
+# -------------------------------------------------|
+# Name  : Silviana (1939213)                       |
+#       : Choo Weng Yan (1940208)                  |
+# Class : DIT/FT/2B/14                             |
+# -------------------------------------------------|
+
+
 # selection menu
 
 import sys
@@ -10,7 +19,6 @@ from compiler.SortExpression import *
 import utils.AnsiEscapeCodes as constant
 
 # prints menu and runs the function of the chosen option
-
 
 class InteractiveMenu:
     def __init__(self):
@@ -26,7 +34,6 @@ class InteractiveMenu:
         done_by = ' - Done by: Silviana (1939213) & Choo Weng Yan (1940208)'
         class_name = ' - Class: DIT/FT/2B/14'
 
-        # border = (len(done_by)+4) * border_symbol
         border = 60*border_symbol
         seperator = (len(border)-4) * "-"
 
@@ -101,7 +108,3 @@ class InteractiveMenu:
         for _ in range(n): 
             sys.stdout.write(constant.CURSOR_UP_ONE) 
             sys.stdout.write(constant.ERASE_LINE) 
-
-
-# menu = Menu()
-# menu.select_option()

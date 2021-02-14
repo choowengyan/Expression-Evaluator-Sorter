@@ -1,3 +1,14 @@
+# -------------------------------------------------|
+# ST1507 DSAA CA2 : Expression Evaluator & Sorter  |
+# -------------------------------------------------|
+# Name  : Silviana (1939213)                       |
+#       : Choo Weng Yan (1940208)                  |
+# Class : DIT/FT/2B/14                             |
+# -------------------------------------------------|
+
+
+# Evaluating Expression & Sorting Expression 
+
 class BinaryTree:
     # constructor 
     def __init__(self, key, leftTree = None, rightTree = None):
@@ -5,7 +16,6 @@ class BinaryTree:
         self.leftTree = leftTree
         self.rightTree = rightTree
 
-    # we are going to override the inherited __str__ function 
     # str function n preorder function will work together 
     def __str__(self):
         return self.preorder(0) # start from root (0) -> which is 0

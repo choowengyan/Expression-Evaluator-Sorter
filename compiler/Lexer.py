@@ -1,3 +1,12 @@
+# -------------------------------------------------|
+# ST1507 DSAA CA2 : Expression Evaluator & Sorter  |
+# -------------------------------------------------|
+# Name  : Silviana (1939213)                       |
+#       : Choo Weng Yan (1940208)                  |
+# Class : DIT/FT/2B/14                             |
+# -------------------------------------------------|
+
+
 '''
 The lexer reads characters from the input/character reader and produces tokens. 
 In other words, it converts a character stream into a token stream. 
@@ -119,6 +128,10 @@ class Lexer():
     def __isExponentialOperator(self, operator):
         operators = '^\*\*$|^\/\/$'
         return re.match(operators, operator) != None
+
+    def __isAtom(self):
+        operators = '(?:[eE][+-]?\d+)?'
+        return re.match(operators, self.__current_char) != None
 
     def __isOpenParenthesis(self):
         paren = '[(]'

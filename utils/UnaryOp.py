@@ -1,3 +1,12 @@
+# -------------------------------------------------|
+# ST1507 DSAA CA2 : Expression Evaluator & Sorter  |
+# -------------------------------------------------|
+# Name  : Silviana (1939213)                       |
+#       : Choo Weng Yan (1940208)                  |
+# Class : DIT/FT/2B/14                             |
+# -------------------------------------------------|
+
+
 class UnaryOp():
     def __init__(self, key, rightTree):
         self.key = key

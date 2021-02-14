@@ -1,3 +1,14 @@
+# -------------------------------------------------|
+# ST1507 DSAA CA2 : Expression Evaluator & Sorter  |
+# -------------------------------------------------|
+# Name  : Silviana (1939213)                       |
+#       : Choo Weng Yan (1940208)                  |
+# Class : DIT/FT/2B/14                             |
+# -------------------------------------------------|
+
+
+# Selection Menu 
+
 from collections import namedtuple
 from eval_expression import *
 from compiler.Evaluator import * 
@@ -6,6 +17,7 @@ import sys
 
 
 # prints menu and runs the function of the chosen option
+
 class ClassicMenu:
 
     Option = namedtuple('Option', 'label')
@@ -19,7 +31,6 @@ class ClassicMenu:
         done_by = ' - Done by: Silviana (1939213) & Choo Weng Yan (1940208)'
         class_name = ' - Class: DIT/FT/2B/14'
 
-        # border = (len(done_by)+4) * border_symbol
         border = 60*border_symbol
         separator = (len(border)-4) * "-"
 

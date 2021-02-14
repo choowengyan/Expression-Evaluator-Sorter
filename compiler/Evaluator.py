@@ -1,3 +1,23 @@
+# -------------------------------------------------|
+# ST1507 DSAA CA2 : Expression Evaluator & Sorter  |
+# -------------------------------------------------|
+# Name  : Silviana (1939213)                       |
+#       : Choo Weng Yan (1940208)                  |
+# Class : DIT/FT/2B/14                             |
+# -------------------------------------------------|
+
+'''
+Evaluates input expression by importing tokens and trees from utils and compiler 
+folder. 
+
+Methods:
+- print Parse Tree
+    - Preoder Traversal
+    - Inoder Traversal
+    - Postoder Traversal
+- evaluate expression and return value in 2 decimal places 
+'''
+
 from utils.BinaryTree import BinaryTree
 from utils.Stack import Stack
 from compiler.Lexer import Lexer
@@ -11,11 +31,11 @@ class Evaluator:
         self.parser = Parser(exp)
         self.tree = self.parser.parse()
 
+    # Print tree in different traversal order 
     def printParseTree(self):
         # parser tree
         # print("ast\n{}".format(self.tree))
         # print(self.evaluate(self.tree))
-        # Print tree in different traversal order 
         order_choice = int(input('\nPrint expression in:\n1. Preorder Traversal\n2. Inorder Traversal\n3. Postorder Traversal\n>>> '))
 
         if order_choice == 1:
@@ -30,6 +50,7 @@ class Evaluator:
         else:
             print('Invalid choice, please try again.\n')
 
+    # Evaluate expressions 
     def evaluate(self, ast):
         try:
             leftTree = ast.getLeftTree()
@@ -68,6 +89,7 @@ class Evaluator:
         except ZeroDivisionError:
             print(f'{self.evaluate(leftTree)} cannot divide by 0, please try again.')
 
+    # Print chosen parse tree traversal order and return expression value 
     def eval_expression(self, exp):
         self.exp = exp
         try:
@@ -84,7 +106,7 @@ class Evaluator:
                 result = self.evaluate(self.tree)
                 print(f'\nExpression evaluates to: \n{result}\n')
                 # return result to assert on test_evalexp.py
-                # return result
+                return result
                 return False
         except ValueError:
             raise ValueError('You entered invalid expression format. Please try again.\n')

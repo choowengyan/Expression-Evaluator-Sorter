@@ -1,23 +1,42 @@
+# -------------------------------------------------|
+# ST1507 DSAA CA2 : Expression Evaluator & Sorter  |
+# -------------------------------------------------|
+# Name  : Silviana (1939213)                       |
+#       : Choo Weng Yan (1940208)                  |
+# Class : DIT/FT/2B/14                             |
+# -------------------------------------------------|
+
+
+'''
+Sorting Expression class will prompt user for input file and output file in order
+to read and write the expressions. 
+
+This class will evaluate the expressions and sort them using bubble sort method. 
+The functions will firstly sort the expressions by their values, and later by expression length.
+User will be given option to sort expressions in ascending or descending order.
+
+'''
+
+
 from compiler.Evaluator import *
 from compiler.Parser import *
-
+from collections import OrderedDict 
 import sys
 import os 
 import glob
 import click
-# import numpy as np
-from collections import OrderedDict 
-
-
 
 
 class SortExpression:
+
+    # constructor 
     def __init__(self, expression_list=[]):
         self.expression_list = expression_list
         self.sorted_value = None
         self.sorted_list = []
         super().__init__()
 
+    # prompt user for input and output file 
     def openFile(self):
         while True:
             try:
@@ -26,6 +45,7 @@ class SortExpression:
                 inputFileName = self.inputFileName
                 outputFileName = self.outputFileName
 
+                # reads expression from input file 
                 with open(inputFileName) as f:
                     self.file_exp = [line.rstrip('\n') for line in f] 
                 return False
@@ -34,6 +54,7 @@ class SortExpression:
                 print('\nInput or Output File not accessible, please try again\n')
         return outputFileName, self.file_exp
 
+    # evaluate expressions and return values into the list 
     def eval_expression(self, file_exp):
         values = []
         file_exp = self.file_exp
@@ -46,11 +67,16 @@ class SortExpression:
             value = evaluator.evaluate(tree)
             values.append(value)
 
+        # form tuple, compile expression and values by zipping them up 
         exp_val_list = list(zip(file_exp, values))
         self.expression_list = exp_val_list
         return exp_val_list
 
-    # bubble sort value (ascending)
+    '''
+    Implementation of bubble sort method to sort expression 
+    '''
+
+    # sort the value of expression (ascending order)
     def sort_val_asc(self, exp_list):
 
         l = len(exp_list)
@@ -64,6 +90,7 @@ class SortExpression:
         return exp_list
         self.sorted_value = exp_list
 
+    # sort the value of expression (descending order)
     def sort_val_desc(self, exp_list):
         l = len(exp_list)
 
@@ -76,7 +103,7 @@ class SortExpression:
         return exp_list
         self.sorted_value = exp_list
         
-    # sort expressions by length 
+    # sort the length expression (ascending order)
     def sort_length_asc(self, sorted_value):
         v = len(sorted_value)
 
@@ -90,7 +117,7 @@ class SortExpression:
         self.sorted_list = sorted_value
         return sorted_value
 
-    # sort expressions by length (desc)
+    # sort the length of expression (descending order)
     def sort_length_desc(self, sorted_value):
         v = len(sorted_value)
 
@@ -112,9 +139,11 @@ class SortExpression:
             val = sorted_list[i][1]
             unique_value.append(val)
 
+        # OrderedDict module to get the exact order of the value from the list 
         unique_value = list(OrderedDict.fromkeys(unique_value))
         self.get_unique_value = unique_value
 
+    # write expression into the output file 
     def write_expression(self, sorted_list):
 
         unique_val_l = len(self.get_unique_value)
@@ -132,7 +161,8 @@ class SortExpression:
 
         print("\n>>> Evaluation and sorting completed!\n ") 
 
-    # print output 
+    # prompt user for order of sorting
+    # print output on terminal and output file 
     def printOutput(self):
         
         sort = SortExpression()
@@ -161,18 +191,3 @@ class SortExpression:
             sort.write_expression(self.sorted_)
             return False
 
-    
-
-
-
-# sort = SortExpression()
-# exp = sort.openFile2()
-# eval = sort.eval_expression(exp)
-# value = sort.sort_val(eval)
-# sorted_ = sort.sort_length(value)
-# sort.get_unique_value(sorted_)
-# sort.write_expression(sorted_)
-
-
-# sortEx = SortExpression()
-# sortEx.eval_sort_output()
